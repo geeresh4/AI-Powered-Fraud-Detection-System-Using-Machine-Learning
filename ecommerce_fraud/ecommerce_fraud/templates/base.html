@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fraud Detection System</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: "Poppins", sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(0,0,0,0.65);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        }
+        .navbar-brand, .nav-link {
+            color: #f1faff !important;
+            font-weight: 600;
+        }
+        .nav-link:hover {
+            color: #90e0ef !important;
+            transform: scale(1.1);
+        }
+
+        /* Container */
+        .container {
+            margin-top: 100px;
+            background: rgba(255,255,255,0.9);
+            padding: 40px 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            animation: fadeIn 1s ease forwards;
+            position: relative;
+        }
+
+        h2 {
+            color: #023e8a;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2::after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background-color: #0096c7;
+            margin: 10px auto 0;
+            border-radius: 5px;
+        }
+
+        .btn-custom {
+            background: linear-gradient(45deg, #0077b6, #0096c7);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 25px;
+            border-radius: 10px;
+        }
+        .btn-custom:hover {
+            background: linear-gradient(45deg, #00b4d8, #0077b6);
+            transform: scale(1.05);
+        }
+
+        /* Animated icons */
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.2;
+            animation: float 6s infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            background: #001219;
+            color: #caf0f8;
+            text-align: center;
+            padding: 15px 0;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(40px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">🔍 Fraud Detection System</a>
+
+            <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" 
+                    data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav me-3">
+
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="/admin_login/">Admin Login</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="/register/">Register</a></li>
+
+                    <li class="nav-item"><a class="nav-link" href="/user_login/">User Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+
+        <!-- Floating Security Icons -->
+        <div class="floating-icon" style="top:10%; left:5%;">🔐</div>
+        <div class="floating-icon" style="top:40%; left:80%;">🛡️</div>
+        <div class="floating-icon" style="top:70%; left:20%;">💳</div>
+        <div class="floating-icon" style="top:20%; left:60%;">📊</div>
+        <div class="floating-icon" style="top:55%; left:5%;">⚠️</div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2025 Fraud Detection Prediction System · Secure • Smart • AI Powered
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

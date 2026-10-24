@@ -1,0 +1,220 @@
+{% extends 'base.html' %}
+{% block title %}Fraud Detection - Input{% endblock %}
+
+{% block content %}
+<style>
+    .fraud-section {
+        min-height: 90vh;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #001d3d, #003566);
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        position: relative;
+    }
+
+    /* Logout Button */
+    .logout-btn {
+        position: absolute;
+        top: 25px;
+        right: 30px;
+        background: linear-gradient(45deg, #ef233c, #d90429);
+        color: #fff;
+        font-weight: 600;
+        padding: 10px 22px;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        transition: 0.3s;
+        z-index: 10;
+        box-shadow: 0 0 12px rgba(255, 50, 50, 0.7);
+    }
+    .logout-btn:hover {
+        transform: scale(1.1);
+        background: linear-gradient(45deg, #d90429, #9d0208);
+    }
+
+    /* Form Card */
+    .form-card {
+        background: rgba(255,255,255,0.08);
+        backdrop-filter: blur(12px);
+        padding: 35px 40px;
+        border-radius: 25px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+        width: 100%;
+        max-width: 650px;
+        color: #caf0f8;
+        animation: fadeUp 0.8s ease;
+    }
+
+    .form-card h3 {
+        color: #90e0ef;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 25px;
+        text-shadow: 0 0 12px #00b4d8;
+    }
+
+    .form-control {
+        background: rgba(255,255,255,0.1);
+        border: 2px solid #00b4d8;
+        color: #caf0f8;
+        padding: 12px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+    }
+
+    .form-control option {
+        background: #003049;
+        color: #caf0f8;
+    }
+
+    .form-control:focus {
+        border-color: #90e0ef;
+        box-shadow: 0 0 10px #00b4d8;
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: linear-gradient(45deg, #00b4d8, #0077b6);
+        color: white;
+        padding: 14px;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 18px #00b4d8;
+    }
+
+    .prediction-box {
+        background: rgba(255,255,255,0.15);
+        padding: 25px;
+        border-radius: 15px;
+        margin-top: 25px;
+        text-align: center;
+        color: #caf0f8;
+        border-left: 4px solid #00b4d8;
+        box-shadow: 0 0 15px rgba(0,180,216,0.3);
+    }
+
+    /* Get Another Prediction Button */
+    .again-btn {
+        margin-top: 25px;
+        text-align: center;
+    }
+    .again-btn a {
+        background: linear-gradient(45deg, #00b4d8, #0077b6);
+        color: #fff;
+        padding: 12px 30px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: 0.3s;
+        display: inline-block;
+        box-shadow: 0 0 14px rgba(0,180,216,0.6);
+    }
+    .again-btn a:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 20px rgba(0,180,216,0.9);
+    }
+
+    @keyframes fadeUp {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<section class="fraud-section">
+
+    <!-- LOGOUT BUTTON -->
+    <form method="POST" action="/logout/">
+        {% csrf_token %}
+        <button class="logout-btn">Logout</button>
+    </form>
+
+    <div class="form-card">
+        <h3>🔐 Fraud Prediction Input</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- NUMERIC INPUTS -->
+            <input type="number" class="form-control" name="transaction_id" placeholder="Transaction ID" required>
+            <input type="number" class="form-control" name="user_id" placeholder="User ID" required>
+
+            <!-- Transaction Method -->
+            <select class="form-control" name="transaction_method" required>
+                <option value="">Transaction Method</option>
+                <option value="UPI">UPI</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="Net Banking">Net Banking</option>
+                <option value="Wallet">Wallet</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <input type="number" class="form-control" name="transaction_amount" placeholder="Transaction Amount" required>
+            <input type="number" class="form-control" name="location_distance_km" placeholder="Location Distance (KM)" required>
+            <input type="number" class="form-control" name="failed_login_attempts" placeholder="Failed Login Attempts" required>
+
+            <!-- YES/NO fields -->
+            <select class="form-control" name="coupon_used" required>
+                <option value="">Coupon Used?</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <input type="number" class="form-control" name="refund_history" placeholder="Refund History Count" required>
+
+            <select class="form-control" name="device_change" required>
+                <option value="">Device Changed?</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
+            <input type="number" class="form-control" name="ip_risk_score" placeholder="IP Risk Score (0–100)" required>
+            <input type="number" class="form-control" name="behavior_score" placeholder="Behavior Score (0–100)" required>
+
+            <!-- Model Selector -->
+            <select class="form-control" name="model_choice" required>
+                <option value="">-- Select Model --</option>
+                <option value="xgboost">XGBoost Classifier</option>
+                <option value="stacking">Stacking Classifier</option>
+            </select>
+
+            <button type="submit" class="submit-btn mt-3">Predict Fraud Type</button>
+        </form>
+
+        <!-- Prediction Result -->
+        {% if predicted_class %}
+        <div class="prediction-box">
+            <h4>🔍 Prediction Result</h4>
+            <h2 style="color:#90e0ef; font-weight:700; text-shadow:0 0 10px #00b4d8;">
+                {{ predicted_class }}
+            </h2>
+            <p>Model Used: <strong>{{ model_used }}</strong></p>
+        </div>
+
+        <!-- Get Another Prediction Button -->
+        <div class="again-btn">
+            <a href="/user_input/">🔁 Get Another Prediction</a>
+        </div>
+        {% endif %}
+
+        <!-- Error -->
+        {% if error %}
+        <div class="prediction-box" style="border-left-color:#ff4d6d;">
+            <h4 style="color:#ffb3c1;">⚠ Error</h4>
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

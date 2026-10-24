@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    /* Page Container */
+    .dashboard-container {
+        min-height: 75vh;
+        padding: 40px 20px;
+        background: linear-gradient(to right, #001d3d, #003566);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    /* Workflow Navigation */
+    .workflow-nav {
+        display: flex;
+        gap: 20px;
+        background: rgba(255,255,255,0.08);
+        backdrop-filter: blur(8px);
+        padding: 12px 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        animation: fadeIn 1s ease;
+    }
+    .workflow-nav a {
+        color: #90e0ef;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+    .workflow-nav a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px #00b4d8;
+    }
+
+    /* Title Card */
+    .welcome-card {
+        background: rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 35px 45px;
+        width: 100%;
+        max-width: 800px;
+        text-align: center;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.5);
+        animation: fadeIn 1s ease;
+    }
+
+    .welcome-card h2 {
+        color: #90e0ef;
+        font-weight: 800;
+        margin-bottom: 10px;
+        text-shadow: 0 0 15px #00b4d8;
+    }
+
+    .welcome-card p {
+        color: #caf0f8;
+        opacity: 0.85;
+        font-size: 1.05rem;
+    }
+
+    /* Upload Card */
+    .upload-card {
+        background: rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 30px;
+        width: 100%;
+        max-width: 600px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+        animation: fadeUp 1.1s ease;
+    }
+
+    .upload-card h4 {
+        color: #90e0ef;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 25px;
+        text-shadow: 0 0 10px #00b4d8;
+    }
+
+    /* File Input */
+    .upload-card input[type="file"] {
+        border-radius: 12px;
+        border: 2px solid #00b4d8;
+        padding: 10px;
+        background: rgba(0,0,0,0.2);
+        color: #caf0f8;
+        transition: 0.3s;
+    }
+
+    .upload-card input[type="file"]:focus {
+        border-color: #90e0ef;
+        box-shadow: 0 0 10px rgba(0,180,216,0.6);
+    }
+
+    /* Submit Button */
+    .upload-card button {
+        background: linear-gradient(45deg, #00b4d8, #0077b6);
+        color: #fff;
+        font-weight: 600;
+        padding: 12px 30px;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1.1rem;
+        transition: 0.3s;
+        box-shadow: 0 0 12px rgba(0,180,216,0.5);
+    }
+
+    .upload-card button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0,180,216,0.9);
+    }
+
+    /* Alerts */
+    .alert {
+        border-radius: 10px;
+        text-align: center;
+        font-weight: 500;
+        background: rgba(0,180,216,0.2);
+        color: #caf0f8;
+        border-left: 4px solid #00b4d8;
+        box-shadow: 0 0 15px rgba(0,119,182,0.5);
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+        0% { opacity: 0; transform: translateY(25px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+</style>
+
+<div class="dashboard-container">
+
+    <!-- Workflow Navigation -->
+    <div class="workflow-nav">
+        <a href="/upload/">1. Upload</a>
+        <a href="/preprocess/">2. Preprocess</a>
+        <a href="/split/">3. Split</a>
+        <a href="/train_xgboost/">4A. Train XGBoost</a>
+        <a href="/train_stacking/">4B. Train Stacking</a>
+    </div>
+
+    <!-- Header -->
+    <div class="welcome-card">
+        <h2>📂 Upload Fraud Detection Dataset</h2>
+        <p>Upload your CSV dataset containing fraud transaction records to begin preprocessing.</p>
+    </div>
+
+    <!-- Upload Card -->
+    <div class="upload-card">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label class="form-label" style="color:#90e0ef; font-weight:600;">
+                Choose Fraud Dataset (CSV)
+            </label>
+            <input type="file" class="form-control mb-3" name="dataset" required>
+
+            <button type="submit">Upload Dataset</button>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

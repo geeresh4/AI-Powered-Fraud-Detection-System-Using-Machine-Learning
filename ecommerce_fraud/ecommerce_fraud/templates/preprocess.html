@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    /* Main container */
+    .dashboard-container {
+        min-height: 75vh;
+        padding: 25px;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        animation: fadeIn 0.8s ease-in-out;
+    }
+
+    /* Workflow Navigation */
+    .workflow-nav {
+        display: flex;
+        gap: 20px;
+        background: rgba(255,255,255,0.08);
+        padding: 12px 25px;
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        animation: fadeIn 1s ease;
+    }
+    .workflow-nav a {
+        color: #a8e6ff;
+        font-weight: 700;
+        text-decoration: none;
+        transition: .3s ease;
+    }
+    .workflow-nav a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px #00e5ff;
+    }
+
+    /* Title Card */
+    .title-card {
+        background: rgba(255,255,255,0.1);
+        border-radius: 20px;
+        padding: 25px 40px;
+        width: 100%;
+        max-width: 700px;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        animation: fadeInUp 1s ease;
+    }
+
+    .title-card h2 {
+        color: #e0f7fa;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .title-card p {
+        color: #b2ebf2;
+        font-size: 1rem;
+        margin: 0;
+    }
+
+    /* Status Box */
+    .status-card {
+        width: 100%;
+        max-width: 750px;
+        background: rgba(255,255,255,0.08);
+        border-radius: 20px;
+        padding: 30px;
+        backdrop-filter: blur(12px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        animation: fadeInUp 1s ease;
+    }
+
+    .status-card h4 {
+        color: #a8e6ff;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    /* Alerts */
+    .alert {
+        padding: 18px;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+        text-align: left;
+        white-space: pre-line;
+    }
+
+    .alert-success {
+        background: linear-gradient(145deg, #0096c7, #0077b6);
+        color: #e0faff;
+    }
+
+    .alert-warning {
+        background: linear-gradient(145deg, #ffca28, #f9a825);
+        color: #3e2723;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: scale(.95); }
+        to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(25px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="dashboard-container">
+
+    <!-- Workflow Navigation -->
+    <div class="workflow-nav">
+        <a href="/upload/">1. Upload</a>
+        <a href="/preprocess/">2. Preprocess</a>
+        <a href="/split/">3. Split</a>
+        <a href="/train_xgboost/">4A. Train XGBoost</a>
+        <a href="/train_stacking/">4B. Train Stacking</a>
+    </div>
+
+    <!-- Title Card -->
+    <div class="title-card">
+        <h2>🔍 Data Preprocessing Summary</h2>
+        <p>All data cleaning and label encoding results are shown below.</p>
+    </div>
+
+    <!-- Status Output -->
+    <div class="status-card">
+
+        <h4>📑 Preprocessing Results</h4>
+
+        {% if result %}
+            <div class="alert alert-success" role="alert">
+                {{ result|safe }}
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                ⚠️ No preprocessing results found.
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

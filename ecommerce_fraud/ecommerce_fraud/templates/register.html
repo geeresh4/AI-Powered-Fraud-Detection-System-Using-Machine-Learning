@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    .register-wrapper {
+        min-height: 75vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+        padding: 20px;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 520px;
+        padding: 35px 30px;
+        border-radius: 20px;
+        background: rgba(255,255,255,0.08);
+        box-shadow: 0 10px 35px rgba(0,0,0,0.4);
+        backdrop-filter: blur(12px);
+        animation: fadeIn 0.9s ease-out;
+    }
+
+    .register-card h2 {
+        color: #a8e6ff;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 25px;
+        text-shadow: 0 0 10px rgba(0,153,255,0.6);
+    }
+
+    .form-label {
+        color: #d0efff;
+        font-weight: 500;
+    }
+
+    .form-control {
+        background: rgba(255,255,255,0.15);
+        border: 1px solid #78c5ff;
+        color: #e0f7ff;
+    }
+
+    .form-control:focus {
+        background: rgba(255,255,255,0.2);
+        border-color: #00b4d8;
+        box-shadow: 0 0 10px rgba(0,180,216,0.6);
+    }
+
+    .btn-submit {
+        background: linear-gradient(45deg, #0077b6, #0096c7);
+        border: none;
+        width: 100%;
+        padding: 12px 0;
+        margin-top: 10px;
+        font-weight: 600;
+        color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        transition: 0.3s ease;
+    }
+
+    .btn-submit:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #00b4d8, #0077b6);
+        box-shadow: 0 12px 28px rgba(0,0,0,0.4);
+    }
+
+    .alert {
+        border-radius: 10px;
+        margin-top: 20px;
+        background: rgba(255,60,60,0.2);
+        backdrop-filter: blur(8px);
+        color: #ffb3b3;
+        border: 1px solid #ff5252;
+    }
+
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(25px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="register-card">
+
+        <h2>📝 User Registration</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" class="form-control rounded-3" placeholder="Enter full name" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control rounded-3" placeholder="Enter email" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Phone</label>
+                <input type="text" name="phone" class="form-control rounded-3" placeholder="Enter phone number" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">City</label>
+                <input type="text" name="city" class="form-control rounded-3" placeholder="Enter city" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">State</label>
+                <input type="text" name="state" class="form-control rounded-3" placeholder="Enter state" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Country</label>
+                <input type="text" name="country" class="form-control rounded-3" placeholder="Enter country" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control rounded-3" placeholder="Enter password" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" name="confirm_password" class="form-control rounded-3" placeholder="Re-enter password" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Register</button>
+        </form>
+
+        {% if messages %}
+        <div class="alert mt-3">
+            {% for message in messages %}
+                <p class="mb-0">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    /* Page Container */
+    .dashboard-container {
+        min-height: 75vh;
+        padding: 40px 20px;
+        background: linear-gradient(135deg, #001d3d, #003566);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        animation: fadeIn 0.9s ease-in-out;
+    }
+
+    /* Workflow Nav */
+    .workflow-nav {
+        display: flex;
+        gap: 20px;
+        background: rgba(255,255,255,0.08);
+        backdrop-filter: blur(8px);
+        padding: 12px 25px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        animation: fadeIn 1s ease;
+    }
+    .workflow-nav a {
+        color: #90e0ef;
+        font-weight: 700;
+        text-decoration: none;
+        transition: 0.3s ease;
+    }
+    .workflow-nav a:hover {
+        color: #fff;
+        text-shadow: 0 0 10px #00b4d8;
+    }
+
+    /* Header Card */
+    .welcome-card {
+        background: rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 30px 35px;
+        width: 100%;
+        max-width: 750px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+        backdrop-filter: blur(12px);
+        text-align: center;
+        animation: fadeUp 1s ease;
+    }
+
+    .welcome-card h2 {
+        color: #a8e6ff;
+        font-weight: 700;
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        text-shadow: 0 0 12px rgba(0,153,255,0.6);
+    }
+
+    .welcome-card p {
+        color: #d0efff;
+        font-size: 1rem;
+        margin-bottom: 0;
+        opacity: 0.95;
+    }
+
+    /* Status Card */
+    .status-card {
+        background: rgba(255,255,255,0.08);
+        border-radius: 22px;
+        padding: 35px;
+        width: 100%;
+        max-width: 750px;
+        box-shadow: 0 10px 35px rgba(0,0,0,0.35);
+        text-align: center;
+        backdrop-filter: blur(12px);
+        animation: fadeUp 1.2s ease;
+    }
+
+    .status-card h4 {
+        color: #a8e6ff;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-shadow: 0 0 10px rgba(0,153,255,0.6);
+    }
+
+    /* Alerts */
+    .alert {
+        border-radius: 12px;
+        padding: 18px;
+        font-size: 1rem;
+        font-weight: 500;
+        border: none;
+    }
+
+    .alert-success {
+        background: rgba(0,180,216,0.25);
+        color: #b3f2ff;
+        border-left: 4px solid #00b4d8;
+    }
+
+    .alert-warning {
+        background: rgba(255,200,0,0.2);
+        color: #fff4b3;
+        border-left: 4px solid #ffd60a;
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+        0% { opacity: 0; transform: translateY(25px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+        0% { opacity: 0; }
+        100% { opacity: 1;}
+    }
+</style>
+
+<div class="dashboard-container">
+
+    <!-- Workflow Navigation -->
+    <div class="workflow-nav">
+        <a href="/upload/">1. Upload</a>
+        <a href="/preprocess/">2. Preprocess</a>
+        <a href="/split/">3. Split</a>
+        <a href="/train_xgboost/">4A. Train XGBoost</a>
+        <a href="/train_stacking/">4B. Train Stacking</a>
+    </div>
+
+    <!-- Header -->
+    <div class="welcome-card">
+        <h2>🔍 Train–Test Split Status</h2>
+        <p>The dataset has been processed. Below is the result of splitting your data.</p>
+    </div>
+
+    <!-- Status Card -->
+    <div class="status-card">
+        {% if result %}
+            <div class="alert alert-success">
+                {{ result|safe }}
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                No split information available yet.
+            </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+    /* Background */
+    .admin-login-section {
+        min-height: 90vh;
+        padding: 50px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #001d3d, #003566);
+    }
+
+    /* Card */
+    .admin-card {
+        width: 100%;
+        max-width: 450px;
+        padding: 40px 45px;
+        background: rgba(255,255,255,0.07);
+        backdrop-filter: blur(10px);
+        border-radius: 25px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        animation: fadeIn 1s ease;
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .admin-card h2 {
+        text-align: center;
+        color: #90e0ef;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-shadow: 0 0 12px #00b4d8;
+    }
+
+    /* Labels */
+    .form-label {
+        color: #caf0f8;
+        font-weight: 600;
+    }
+
+    /* Inputs */
+    .form-control {
+        background: rgba(255,255,255,0.1);
+        color: white;
+        border: 2px solid rgba(144,224,239,0.4);
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .form-control::placeholder {
+        color: #bde0fe;
+        opacity: 0.7;
+    }
+
+    .form-control:focus {
+        border-color: #00b4d8;
+        box-shadow: 0 0 12px rgba(0,180,216,0.6);
+        background: rgba(255,255,255,0.15);
+        color: #fff;
+    }
+
+    /* Login Button */
+    .login-btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(45deg, #00b4d8, #0096c7);
+        color: #fff;
+        transition: 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .login-btn:hover {
+        transform: scale(1.05);
+        background: linear-gradient(45deg, #0096c7, #0077b6);
+        box-shadow: 0 0 18px #00b4d8;
+    }
+
+    /* Error Alert */
+    .alert-danger {
+        background: rgba(255, 77, 77, 0.15);
+        color: #ffb3b3;
+        border-radius: 12px;
+        padding: 12px;
+        margin-top: 20px;
+        border: 1px solid rgba(255, 0, 0, 0.4);
+        box-shadow: 0 0 15px rgba(255,0,0,0.1);
+        text-align: center;
+        font-weight: 500;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+        0% { opacity: 0; transform: translateY(40px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<section class="admin-login-section">
+
+    <div class="admin-card">
+        <h2>🔐 Admin Login</h2>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter admin username" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+            </div>
+
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        {% if messages %}
+        <div class="alert-danger">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+</section>
+
+{% endblock %}
